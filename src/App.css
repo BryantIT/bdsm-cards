@@ -1,38 +1,61 @@
-.App {
-  text-align: center;
+@import url("https://fonts.googleapis.com/css?family=Muli:400,800&display=swap");
+* {
+  font-family: "Muli", sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  background: #001519;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+
+button {
+  background: transparent;
+  min-width: 100px;
+  text-transform: uppercase;
+  border-radius: 8px;
+  font-size: 15px;
+  padding: 10px 16px;
+  margin: 0 3px 0 0;
+  cursor: pointer;
+  transition-duration: 0.1s;
+  transition-timing-function: ease-in-out;
+}
+button:first-of-type {
+  border-radius: 20px 8px 8px 20px;
+}
+button:last-of-type {
+  border-radius: 8px 20px 20px 8px;
+}
+
+@media only screen and (max-width: 767px) {
+  button {
+    min-width: 80px;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "profile main main main"
+    "profile main main main"
+    "profile main main main"
+    "profile main main main"
+    "quick-nav quick-nav quick-nav quick-nav";
 }
 
-.App-link {
-  color: #61dafb;
-}
+.quick-nav {
+  grid-area: quick-nav;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+ }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+.profile {
+  grid-area: profile;
+ }
+
+.main { grid-area: main; }

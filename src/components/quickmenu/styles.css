@@ -1,0 +1,37 @@
+
+.skin3 button {
+  border: 3px solid #00d4ff;
+  color: #00d4ff;
+  background-color: #002a33;
+}
+.skin3 button:hover {
+  border-color: #33ddff;
+  color: #33ddff;
+  background-color: #005566;
+}
+.skin3 button:focus {
+  border-color: #33ddff;
+  color: #33ddff;
+  background-color: #005566;
+  padding: 16px 16px;
+  outline: 0;
+  border-radius: 12px;
+}
+.skin3 button:focus:first-of-type {
+  border-radius: 30px 12px 12px 30px;
+}
+.skin3 button:focus:last-of-type {
+  border-radius: 12px 30px 30px 12px;
+}
+
+.group-container {
+  height: 100px;
+  display: grid;
+  place-items: center;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.multi-button {
+  font-size: 0;
+}
