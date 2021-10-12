@@ -1,16 +1,17 @@
 import React, { Fragment } from 'react'
-import './styles.css'
+import {
+  GroupContainer,
+  ButtonWrapper
+ } from './Styles'
 
 const Footer = () => {
   return (
     <Fragment>
-      <div className="group-container">
-        <div className="multi-button skin3">
-          <button>First</button>
-          <button>Second</button>
-          <button>Third</button>
-        </div>
-      </div>
+      <GroupContainer>
+        <ButtonWrapper>
+          <button>Quick Menu</button>
+        </ButtonWrapper>
+      </GroupContainer>
     </Fragment>
   )
 }
