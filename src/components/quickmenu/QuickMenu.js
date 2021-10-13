@@ -4,7 +4,7 @@ import {
   ButtonWrapper
  } from './Styles'
 
-const Footer = () => {
+const QuickMenu = () => {
   const [isClicked, setIsClicked] = useState(false)
 
   const handleMenuClick = () => {
@@ -22,4 +22,4 @@ const Footer = () => {
   )
 }
 
-export default Footer
+export default QuickMenu

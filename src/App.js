@@ -1,8 +1,7 @@
 import React, { Fragment } from 'react'
-import Footer from './components/quickmenu/Footer'
+import QuickMenu from './components/quickmenu/QuickMenu'
 import Main from './components/main/Main'
 import Profile from './components/profile/Profile'
-import TestFooter from './components/TestFooter'
 import './App.css';
 
 function App() {
@@ -12,7 +11,7 @@ function App() {
         <Main />
       </div>
       <div className="quick-nav">
-        <Footer />
+        <QuickMenu />
       </div>
       <div className="profile">
         <Profile />
