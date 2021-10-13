@@ -21,8 +21,8 @@ export const ButtonWrapper = styled.div`
     &:focus {
       border-color: #33ddff;
       color: #33ddff;
-      background-color: #005566;
-      padding: 16px 16px;
+      background-color: ${props => props.clicked ? '#005566' : '#002a33'};
+      padding: ${props => props.clicked ? '16px 16px' : ''};
       outline: 0;
       border-radius: 12px;
     }
