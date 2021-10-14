@@ -35,3 +35,12 @@ export const ButtonWrapper = styled.div`
   }
 
 `
+
+export const MainGroupContainer = styled.div`
+  height: 100px;
+  display: grid;
+  place-items: center;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  transition: 2s;
+`

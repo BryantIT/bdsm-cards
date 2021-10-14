@@ -40,10 +40,10 @@ button:last-of-type {
   gap: 0px 0px;
   grid-auto-flow: row;
   grid-template-areas:
-    "profile main main main"
-    "profile main main main"
-    "profile main main main"
-    "profile main main main"
+    "main main main main"
+    "main main main main"
+    "main main main main"
+    "main main main main"
     "quick-nav quick-nav quick-nav quick-nav";
 }
 
@@ -52,10 +52,6 @@ button:last-of-type {
   position: fixed;
   bottom: 0;
   width: 100%;
- }
-
-.profile {
-  grid-area: profile;
  }
 
 .main { grid-area: main; }

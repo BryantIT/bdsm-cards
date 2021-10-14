@@ -1,8 +1,9 @@
 import React, { Fragment, useState } from 'react'
+import MenuOptions from './MenuOptions'
 import {
   GroupContainer,
   ButtonWrapper
- } from './Styles'
+} from './QuickMenuStyles'
 
 const QuickMenu = () => {
   const [isClicked, setIsClicked] = useState(false)
@@ -13,6 +14,12 @@ const QuickMenu = () => {
   console.log(isClicked)
   return (
     <Fragment>
+      {
+        isClicked ?
+        <GroupContainer>
+          <MenuOptions />
+        </GroupContainer> : null
+      }
       <GroupContainer>
         <ButtonWrapper clicked={isClicked}>
           <button onClick={handleMenuClick}>Quick Menu</button>
