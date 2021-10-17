@@ -1,5 +1,5 @@
 import React from 'react'
-import Signup from '../signup/Signup'
+import UserForm from '../userForm/UserForm'
 import {
   Section,
   ModalWrapper
@@ -9,11 +9,8 @@ const Modal = ({ origin, showModal, clearModal }) => {
   return (
     showModal ?
 	<Section>
-      <ModalWrapper onClick={clearModal}>
-            {
-              origin === 'signup' ?
-              <Signup /> : null
-            }
+      <ModalWrapper>
+              <UserForm origin={origin} clearModal={clearModal}/> : null
       </ModalWrapper>
 	</Section> : null
   )

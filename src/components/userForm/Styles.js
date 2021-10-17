@@ -62,6 +62,8 @@ export const Container = styled.div`
 `
 
 export const Grid = styled.div`
+  position: relative;
+  border: 5px solid black;
   margin: 0 auto;
   max-width: 25rem;
   width: 100%;
@@ -71,6 +73,7 @@ export const Registration = styled.div`
   text-align: center;
   padding: 4rem 2rem;
   input[type=email], input[type=password] {
+    color: #FFFFFF;
     border: 1px solid #242c37;
     border-radius: 999px;
     background-color: transparent;
@@ -91,4 +94,11 @@ export const Form = styled.form`
 export const FormField = styled.div`
   margin-bottom: 1rem;
   padding-right: 10%;
+`
+
+export const Close = styled.div`
+  position: absolute;
+  top: 0;
+  right: 1px;
+  cursor: pointer;
 `

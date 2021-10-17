@@ -5,7 +5,7 @@ import {
   ButtonWrapper
 } from './QuickMenuStyles'
 
-const QuickMenu = ({ loggedIn, signupCallback }) => {
+const QuickMenu = ({ currentUser, signupCallback }) => {
   const [isClicked, setIsClicked] = useState(false)
 
   const handleMenuClick = () => {
@@ -16,12 +16,12 @@ const QuickMenu = ({ loggedIn, signupCallback }) => {
       {
         isClicked ?
         <GroupContainer>
-          <MenuOptions loggedIn={loggedIn} signupCallback={signupCallback}/>
+          <MenuOptions currentUser={currentUser} signupCallback={signupCallback}/>
         </GroupContainer> : null
       }
       <GroupContainer>
         <ButtonWrapper clicked={isClicked}>
-          <button onClick={handleMenuClick}>{loggedIn ? 'Quick Menu' : 'Start'}</button>
+          <button onClick={handleMenuClick}>{currentUser ? 'Quick Menu' : 'Start'}</button>
         </ButtonWrapper>
       </GroupContainer>
     </Fragment>
