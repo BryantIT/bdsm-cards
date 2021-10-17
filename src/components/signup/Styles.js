@@ -68,7 +68,6 @@ export const Grid = styled.div`
 `
 
 export const Registration = styled.div`
-  box-shadow: 0 0 250px #000;
   text-align: center;
   padding: 4rem 2rem;
   input[type=email], input[type=password] {

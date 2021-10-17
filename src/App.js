@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import QuickMenu from './components/quickmenu/QuickMenu'
 import Main from './components/main/Main'
-import Signup from './components/signup/Signup'
+import Modal from './components/reusable/Modal'
 import {
   Switch,
   Route
@@ -11,9 +11,15 @@ import './App.css';
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [userInfo, setUserInfo] = useState({})
+  const [showModal, setShowModal] = useState(false)
+  const [origin, setOrigin] = useState('')
 
-  const userLogInCallback = (props) => {
-    console.log(props)
+  const signupCallback = (origin, state) => {
+    setShowModal(state)
+    setOrigin(origin)
+  }
+  const clearModal = () => {
+    setShowModal(false)
   }
   return (
     <div className="container">
@@ -22,13 +28,16 @@ function App() {
           <Route exact path='/'>
             <Main />
           </Route>
-          <Route exact path='/signup'>
-            <Signup userLogInCallback={userLogInCallback}/>
-          </Route>
         </Switch>
+        {
+          showModal ?
+          <Modal
+            origin={origin} showModal={showModal} clearModal={clearModal}
+          /> : null
+        }
       </div>
       <div className="quick-nav">
-        <QuickMenu />
+        <QuickMenu loggedIn={loggedIn} signupCallback={signupCallback}/>
       </div>
     </div>
   )

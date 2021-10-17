@@ -7,7 +7,6 @@ import {
   FormField,
   Submit
 } from './Styles.js'
-import './styles.css'
 
 const Signup = () => {
   const [isClicked, setIsClicked] = useState(false)

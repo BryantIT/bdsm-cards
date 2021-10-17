@@ -5,15 +5,25 @@ import {
 } from './QuickMenuStyles'
 
 
-const MenuOptions = () => {
+const MenuOptions = ({ loggedIn, signupCallback }) => {
+  const initiateSignup = () => {
+    signupCallback('signup', true)
+  }
   return (
     <Fragment>
       <MainGroupContainer>
-        <ButtonWrapper >
-          <button >Create Card</button>
-          <button >View Cards</button>
-          <button >Profile</button>
-        </ButtonWrapper>
+        {
+          loggedIn ?
+          <ButtonWrapper >
+              <button>Create Card</button>
+              <button>View Cards</button>
+              <button>Profile</button>
+          </ButtonWrapper> :
+          <ButtonWrapper >
+              <button onClick={initiateSignup}>Signup</button>
+              <button>Login</button>
+          </ButtonWrapper>
+        }
       </MainGroupContainer>
     </Fragment>
   )
