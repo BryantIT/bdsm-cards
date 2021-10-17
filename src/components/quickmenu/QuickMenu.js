@@ -11,7 +11,6 @@ const QuickMenu = () => {
   const handleMenuClick = () => {
     setIsClicked(!isClicked)
   }
-  console.log(isClicked)
   return (
     <Fragment>
       {

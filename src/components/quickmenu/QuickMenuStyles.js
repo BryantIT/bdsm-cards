@@ -33,7 +33,6 @@ export const ButtonWrapper = styled.div`
       border-radius: 12px 30px 30px 12px;
     }
   }
-
 `
 
 export const MainGroupContainer = styled.div`
