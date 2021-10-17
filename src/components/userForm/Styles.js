@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const Submit = styled.div`
+  padding-left: 20px;
   input {
     background: transparent;
     min-width: 100px;
@@ -101,4 +102,18 @@ export const Close = styled.div`
   top: 0;
   right: 1px;
   cursor: pointer;
+`
+
+export const ValidationContainer = styled.ul`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+  padding-left: 0;
+  color: #c4c4c4;
+
+  li {
+    list-style: none;
+    display: inline-block;
+  }
 `

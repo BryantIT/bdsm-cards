@@ -6,9 +6,13 @@ import {
   Form,
   FormField,
   Submit,
-  Close
+  Close,
+  ValidationContainer
 } from './Styles.js'
-import { FaRegWindowClose } from 'react-icons/fa'
+import {
+  FaRegWindowClose,
+  FaCheck
+ } from 'react-icons/fa'
 import { useAuth } from '../../auth/UserAuth'
 import { useHistory } from 'react-router-dom'
 
@@ -21,8 +25,11 @@ const UserForm = ({ origin, clearModal }) => {
   const [signupError, setSignupError] = useState('')
   const [formObj, setFormObj] = useState({
     email: '',
-    password: ''
+    password: '',
+    passwordConfirmation: ''
   })
+  const [isSignup, setIsSignup] = useState(false)
+  const [validEmail, setValidEmail] = useState(false)
 
   const handleMenuClick = () => {
     setIsClicked(!isClicked)
@@ -38,6 +45,9 @@ const UserForm = ({ origin, clearModal }) => {
     const second = capitalizeFirstLetter(words[1])
     const combined = `${first} ${second}`
     setNameValue(combined)
+    if (origin === 'sign-up') {
+      setIsSignup(true)
+    }
   }, [origin])
 
   const clearForm = () => {
@@ -49,9 +59,16 @@ const UserForm = ({ origin, clearModal }) => {
 
   const handleChange = e => {
     const value = e.target.value;
+    const name = e.target.name
+    if (name === 'email') {
+      const emailCheck = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        value
+      )
+      setValidEmail(emailCheck)
+    }
     setFormObj({
       ...formObj,
-      [e.target.name]: value
+      [name]: value
     })
   }
 
@@ -99,16 +116,32 @@ const UserForm = ({ origin, clearModal }) => {
             required
           />
         </FormField>
+        <ValidationContainer>
+          <li><FaCheck color={validEmail ? 'green' : 'red'}/> Must be valid email</li>
+        </ValidationContainer>
         <FormField>
           <input
             value={formObj.password}
             type="password"
-            placeholder="••••••••••••"
+            placeholder="password"
             name='password'
             onChange={handleChange}
             required
           />
         </FormField>
+        {
+          isSignup ?
+          <FormField>
+            <input
+              value={formObj.passwordConfirmation}
+              type="password"
+              placeholder="confirm password"
+              name='passwordConfirmation'
+              onChange={handleChange}
+              required
+            />
+        </FormField> : null
+        }
         <FormField>
           <Submit clicked={isClicked} onClick={handleMenuClick}>
             <input type="submit" value={nameValue} />
