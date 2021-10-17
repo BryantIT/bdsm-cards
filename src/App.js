@@ -26,7 +26,10 @@ function App() {
       <div className="main">
         <Switch>
           <Route exact path='/'>
-            <Main />
+            {
+              !showModal ?
+              <Main /> : null
+            }
           </Route>
         </Switch>
         {
@@ -37,7 +40,10 @@ function App() {
         }
       </div>
       <div className="quick-nav">
-        <QuickMenu loggedIn={loggedIn} signupCallback={signupCallback}/>
+        {
+          !showModal ?
+          <QuickMenu loggedIn={loggedIn} signupCallback={signupCallback}/> : null
+        }
       </div>
     </div>
   )
