@@ -99,7 +99,15 @@ const UserForm = ({ origin, clearModal }) => {
 
   const handleSubmit = e => {
     e.preventDefault()
-    if (formObj && formObj.email && formObj.password) {
+    if (formObj
+      && formObj.email
+      && formObj.password
+      && validEmail
+      && sixCharacters
+      && oneSpecial
+      && oneNumber
+      && oneUpper
+      && passwordMatch) {
       createFirebaseUser()
       clearForm()
       clearModal()
