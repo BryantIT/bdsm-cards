@@ -34,6 +34,7 @@ const UserForm = ({ origin, clearModal }) => {
   const [oneSpecial, setOneSpecial] = useState(false)
   const [oneNumber, setOneNumber] = useState(false)
   const [oneUpper, setOneUpper] = useState(false)
+  const [passwordMatch, setPasswordMatch] = useState(false)
 
   const handleMenuClick = () => {
     setIsClicked(!isClicked)
@@ -81,6 +82,13 @@ const UserForm = ({ origin, clearModal }) => {
         setSixCharacters(true)
       } else {
         setSixCharacters(false)
+      }
+    }
+    if (name === 'passwordConfirmation') {
+      if (value === formObj.password) {
+        setPasswordMatch(true)
+      } else {
+        setPasswordMatch(false)
       }
     }
     setFormObj({
@@ -156,9 +164,6 @@ const UserForm = ({ origin, clearModal }) => {
           <li><FaCheck color={oneSpecial ? 'green' : 'red'}/> Must contain at least one special character</li>
           <li><FaCheck color={oneNumber ? 'green' : 'red'}/> Must contain at least one number</li>
         <li><FaCheck color={oneUpper ? 'green' : 'red'}/> Must contain at least one uppercase letter</li>
-
-
-
         </ValidationContainer> : null
         }
         {
@@ -173,6 +178,12 @@ const UserForm = ({ origin, clearModal }) => {
               required
             />
         </FormField> : null
+        }
+        {
+          isSignup ?
+          <ValidationContainer>
+            <li><FaCheck color={passwordMatch ? 'green' : 'red'}/> Passwords must match</li>
+        </ValidationContainer> : null
         }
         <FormField>
           <Submit clicked={isClicked} onClick={handleMenuClick}>
