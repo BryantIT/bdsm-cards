@@ -30,6 +30,10 @@ const UserForm = ({ origin, clearModal }) => {
   })
   const [isSignup, setIsSignup] = useState(false)
   const [validEmail, setValidEmail] = useState(false)
+  const [sixCharacters, setSixCharacters] = useState(false)
+  const [oneSpecial, setOneSpecial] = useState(false)
+  const [oneNumber, setOneNumber] = useState(false)
+  const [oneUpper, setOneUpper] = useState(false)
 
   const handleMenuClick = () => {
     setIsClicked(!isClicked)
@@ -61,10 +65,23 @@ const UserForm = ({ origin, clearModal }) => {
     const value = e.target.value;
     const name = e.target.name
     if (name === 'email') {
-      const emailCheck = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-        value
-      )
+      const emailCheck = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value)
       setValidEmail(emailCheck)
+    }
+    if (name === 'password') {
+      const capitalCheck = /^(?=.*[A-Z])/.test(value)
+      const digitCheck = /^(?=.*\d)/.test(value)
+      const specialCheck = /^(?=.*[-+_!@#$%^&*.,?])/.test(value)
+
+      setOneNumber(digitCheck)
+      setOneUpper(capitalCheck)
+      setOneSpecial(specialCheck)
+      console.log('VALUE', value.length)
+      if (value.length >= 6) {
+        setSixCharacters(true)
+      } else {
+        setSixCharacters(false)
+      }
     }
     setFormObj({
       ...formObj,
@@ -116,9 +133,12 @@ const UserForm = ({ origin, clearModal }) => {
             required
           />
         </FormField>
-        <ValidationContainer>
-          <li><FaCheck color={validEmail ? 'green' : 'red'}/> Must be valid email</li>
-        </ValidationContainer>
+        {
+          isSignup ?
+          <ValidationContainer>
+            <li><FaCheck color={validEmail ? 'green' : 'red'}/> Must be valid email</li>
+        </ValidationContainer> : null
+        }
         <FormField>
           <input
             value={formObj.password}
@@ -129,6 +149,18 @@ const UserForm = ({ origin, clearModal }) => {
             required
           />
         </FormField>
+        {
+          isSignup ?
+          <ValidationContainer>
+            <li><FaCheck color={sixCharacters ? 'green' : 'red'}/> Must contain at least 6 characters</li>
+          <li><FaCheck color={oneSpecial ? 'green' : 'red'}/> Must contain at least one special character</li>
+          <li><FaCheck color={oneNumber ? 'green' : 'red'}/> Must contain at least one number</li>
+        <li><FaCheck color={oneUpper ? 'green' : 'red'}/> Must contain at least one uppercase letter</li>
+
+
+
+        </ValidationContainer> : null
+        }
         {
           isSignup ?
           <FormField>
