@@ -73,7 +73,7 @@ export const Grid = styled.div`
 export const Registration = styled.div`
   text-align: center;
   padding: 4rem 2rem;
-  input[type=email], input[type=password] {
+  input[type=email], input[type=password], input[type=date] {
     color: #FFFFFF;
     border: 1px solid #242c37;
     border-radius: 999px;
@@ -86,13 +86,14 @@ export const Registration = styled.div`
 `
 
 export const Form = styled.form`
-  input[type=email], input[type=password] {
+  input[type=email], input[type=password], input[type=date] {
     outline: 0;
     padding: 0.5rem 1rem 1rem;
     width: 100%;
 `
 
 export const FormField = styled.div`
+  color: #FFFFFF;
   margin-bottom: 1rem;
   padding-right: 10%;
 `
@@ -116,4 +117,11 @@ export const ValidationContainer = styled.ul`
     list-style: none;
     display: inline-block;
   }
+`
+export const DatePickContainer = styled.div`
+display: flex;
+flex-direction: row;
+width: 100%;
+padding-left: 0;
+color: #c4c4c4;
 `

@@ -7,18 +7,20 @@ import {
   FormField,
   Submit,
   Close,
-  ValidationContainer
+  ValidationContainer,
 } from './Styles.js'
 import {
   FaRegWindowClose,
   FaCheck
  } from 'react-icons/fa'
 import { useAuth } from '../../auth/UserAuth'
+import { db } from '../../firebase'
 import { useHistory } from 'react-router-dom'
+import { DateTime, Interval } from "luxon"
 
 const UserForm = ({ origin, clearModal }) => {
   const history = useHistory()
-  const { signup, currentUser, userInfo } = useAuth()
+  const { signup, signin } = useAuth()
   const [isClicked, setIsClicked] = useState(false)
   const [nameValue, setNameValue] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -26,7 +28,11 @@ const UserForm = ({ origin, clearModal }) => {
   const [formObj, setFormObj] = useState({
     email: '',
     password: '',
-    passwordConfirmation: ''
+    passwordConfirmation: '',
+    tos: false,
+    over18: false,
+    over18Checked: false,
+    birthdate: ''
   })
   const [isSignup, setIsSignup] = useState(false)
   const [validEmail, setValidEmail] = useState(false)
@@ -35,6 +41,8 @@ const UserForm = ({ origin, clearModal }) => {
   const [oneNumber, setOneNumber] = useState(false)
   const [oneUpper, setOneUpper] = useState(false)
   const [passwordMatch, setPasswordMatch] = useState(false)
+  const [over18, setOver18] = useState(false)
+  const [uid, setUid] = useState(null)
 
   const handleMenuClick = () => {
     setIsClicked(!isClicked)
@@ -63,8 +71,19 @@ const UserForm = ({ origin, clearModal }) => {
   }
 
   const handleChange = e => {
-    const value = e.target.value;
+    const value = e.target.value
     const name = e.target.name
+    if (e.target.type === 'checkbox'  && e.target.checked) {
+      setFormObj({
+        ...formObj,
+        tos: true
+      })
+    } else {
+      setFormObj({
+        ...formObj,
+        tos: false
+      })
+    }
     if (name === 'email') {
       const emailCheck = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value)
       setValidEmail(emailCheck)
@@ -77,7 +96,6 @@ const UserForm = ({ origin, clearModal }) => {
       setOneNumber(digitCheck)
       setOneUpper(capitalCheck)
       setOneSpecial(specialCheck)
-      console.log('VALUE', value.length)
       if (value.length >= 6) {
         setSixCharacters(true)
       } else {
@@ -91,11 +109,54 @@ const UserForm = ({ origin, clearModal }) => {
         setPasswordMatch(false)
       }
     }
-    setFormObj({
-      ...formObj,
-      [name]: value
-    })
+    if (e.target.type !== 'checkbox') {
+      setFormObj({
+        ...formObj,
+        [name]: value
+      })
+    }
   }
+
+  const handleChangeOver18 = e => {
+    const name = e.target.name
+    const value = e.target.value
+    const checked = e.target.checked
+    if (name === 'birthdate') {
+      const split = value.split('-')
+      const year = parseInt(split[0])
+      const month = parseInt(split[1])
+      const day = parseInt(split[2])
+      const converted = DateTime.local(year, month, day);
+      const now = DateTime.local()
+      const from = Interval.fromDateTimes(converted, now)
+      const diff = from.count()
+      const checkYears = Math.floor(diff / 31536000000)
+      if (checkYears > 18) {
+        setOver18(true)
+        setFormObj({
+          ...formObj,
+          over18: true,
+          birthdate: converted.ts
+        })
+      } else {
+        setOver18(false)
+        setFormObj({
+          ...formObj,
+          over18: false,
+          birthdate: converted.ts
+        })
+      }
+    }
+    if (e.target.type === 'checkbox') {
+      console.log('checked', name, checked)
+      setFormObj({
+        ...formObj,
+        [name]: checked,
+      })
+    }
+  }
+
+  console.log('FORM', formObj)
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -107,11 +168,10 @@ const UserForm = ({ origin, clearModal }) => {
       && oneSpecial
       && oneNumber
       && oneUpper
-      && passwordMatch) {
+      && passwordMatch
+      && formObj.over18Checked
+      && over18) {
       createFirebaseUser()
-      clearForm()
-      clearModal()
-      history.push('/profile')
     }
   }
 
@@ -123,7 +183,23 @@ const UserForm = ({ origin, clearModal }) => {
       setSignupError('')
       setIsLoading(true)
       await signup(email, password)
-      .then(console.log('Setting User'))
+      .then(res => {
+        if (res) {
+          db.collection('users').doc(`${res.user.uid}`).set({
+              createdOn: DateTime.local().ts,
+              updatedOn: DateTime.local().ts,
+              email: formObj.email,
+              tos: formObj.tos,
+              over18: formObj.over18,
+              over18Checked: formObj.over18Checked,
+              birthdate: formObj.birthdate
+            })
+            signin(email, password)
+            clearForm()
+            clearModal()
+            history.push('/profile')
+        }
+      })
     } catch(error){
       const message = error.message
       setSignupError(message)
@@ -191,6 +267,50 @@ const UserForm = ({ origin, clearModal }) => {
           isSignup ?
           <ValidationContainer>
             <li><FaCheck color={passwordMatch ? 'green' : 'red'}/> Passwords must match</li>
+        </ValidationContainer> : null
+        }
+        {
+          isSignup ?
+          <FormField>
+            <input
+              value={formObj.tos}
+              type="checkbox"
+              name='tos'
+              onChange={handleChange}
+              required
+            />
+           I agree to the TOS
+        </FormField> : null
+        }
+        {
+          isSignup ?
+          <FormField>
+            <input
+              value={formObj.over18Checked}
+              type="checkbox"
+              name='over18Checked'
+              onChange={handleChangeOver18}
+              required
+            />
+          I am over the age of 18 (check and enter birthdate below)
+        </FormField> : null
+        }
+          {
+            isSignup ?
+            <FormField>
+              <input
+                // value={formObj.birthdate}
+                type="date"
+                name="birthdate"
+                onChange={handleChangeOver18}
+                required
+              />
+          </FormField> : null
+          }
+        {
+          isSignup ?
+          <ValidationContainer>
+            <li><FaCheck color={over18 ? 'green' : 'red'}/> Must be over 18</li>
         </ValidationContainer> : null
         }
         <FormField>
