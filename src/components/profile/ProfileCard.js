@@ -1,22 +1,28 @@
 import React from 'react'
+import {
+  CardContainer,
+  ProWrap,
+  Skills,
+  ButtonWrapper
+ } from './ProfileStyle'
 
 const CautionArea = () => {
   return (
-      <div className="card-container">
-         <span className="pro">PRO</span>
-         <img className="round" src="https://randomuser.me/api/portraits/women/79.jpg" alt="user" />
+      <CardContainer>
+         <ProWrap>PRO</ProWrap>
+         <img src="https://randomuser.me/api/portraits/women/79.jpg" alt="user" />
          <h3>Ricky Park</h3>
          <h6>New York</h6>
          <p>User interface designer and <br/> front-end developer</p>
-      <div className="buttons">
-      <button className="primary">
+       <ButtonWrapper>
+      <button>
         Message
       </button>
-      <button className="primary ghost">
+      <button>
         Following
       </button>
-    </div>
-    <div className="skills">
+    </ButtonWrapper>
+    <Skills>
       <h6>Skills</h6>
       <ul>
         <li>UI / UX</li>
@@ -27,8 +33,8 @@ const CautionArea = () => {
         <li>React</li>
         <li>Node</li>
       </ul>
-    </div>
-  </div>
+    </Skills>
+  </CardContainer>
   )
 }
 export default CautionArea
