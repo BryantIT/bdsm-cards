@@ -22,6 +22,7 @@ export const InfoRightWrap = styled.div`
 `
 export const ProfileCardWrap = styled.div`
   grid-area: profile-card;
+  padding-top: 2vh;
 `
 export const ProfileBadgesWrap = styled.div`
   grid-area: profile-badges;
@@ -46,8 +47,7 @@ export const CardContainer = styled.div`
   color: #B3B8CD;
   position: relative;
   border: 5px solid black;
-  margin: 0 auto;
-  max-width: 25rem;
+  height: 100%;
   width: 100%;
   text-align: center;
   h3 {
@@ -65,6 +65,12 @@ export const CardContainer = styled.div`
   	border: 1px solid #03BFCB;
   	border-radius: 50%;
   	padding: 7px;
+  }
+`
+
+export const Editable = styled.div`
+  img {
+    cursor: pointer;
   }
 `
 

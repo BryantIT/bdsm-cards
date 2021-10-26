@@ -1,16 +1,31 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import {
   CardContainer,
   ProWrap,
   Skills,
-  ButtonWrapper
+  ButtonWrapper,
+  Editable
  } from './ProfileStyle'
+ import {useDropzone} from 'react-dropzone'
 
-const CautionArea = () => {
+const ProfileCard = () => {
+    const onDrop = useCallback(acceptedFiles => {
+      console.log('acceptedFiles', acceptedFiles)
+    }, [])
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
   return (
       <CardContainer>
          <ProWrap>PRO</ProWrap>
-         <img src="https://randomuser.me/api/portraits/women/79.jpg" alt="user" />
+       <div {...getRootProps()}>
+        <input {...getInputProps()} />
+        {
+          isDragActive ?
+            <p>Drop the files here ...</p> :
+            <Editable>
+              <img src="/profile.png" alt="user" />
+            </Editable>
+        }
+      </div>
          <h3>Ricky Park</h3>
          <h6>New York</h6>
          <p>User interface designer and <br/> front-end developer</p>
@@ -37,4 +52,4 @@ const CautionArea = () => {
   </CardContainer>
   )
 }
-export default CautionArea
+export default ProfileCard
